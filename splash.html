@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P5C Tech Solutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Orbitron', sans-serif;
+            background: #000;
+        }
+
+        /* ── Fullscreen Video ── */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            background: #000;
+        }
+
+        .video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Fallback animated gradient if video fails */
+        .video-bg.fallback {
+            background: linear-gradient(45deg, #1a0000, #3d0a0a, #1a0000, #4d1500);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ── Dark Overlay ── */
+        .dark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+            z-index: 1;
+        }
+
+        /* ── Ember Particles ── */
+        .embers {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 2;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .ember {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            animation: float-up linear infinite;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) translateX(0) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(40px) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        /* ── Center Content ── */
+        .gate-content {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 30px;
+        }
+
+        /* Logo */
+        .logo-text {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            background: linear-gradient(135deg, #ff3b3b, #ff7b00, #ff3b3b);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 59, 59, 0.5));
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 14px;
+            color: rgba(255, 255, 255, 0.85);
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(255, 59, 59, 0.4);
+            margin-top: -10px;
+        }
+
+        /* Divider line */
+        .divider {
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff3b3b, #ff7b00, #ff3b3b, transparent);
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(255, 59, 59, 0.5);
+        }
+
+        /* ── CTA Button ── */
+        .enter-btn {
+            margin-top: 20px;
+            padding: 20px 60px;
+            font-size: 1.2rem;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: #fff;
+            background: transparent;
+            border: 2px solid #ff3b3b;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow:
+                0 0 15px rgba(255, 59, 59, 0.3),
+                0 0 30px rgba(255, 59, 59, 0.15),
+                inset 0 0 15px rgba(255, 59, 59, 0.1);
+        }
+
+        /* Sweep light effect */
+        .enter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .enter-btn:hover::before {
+            left: 100%;
+        }
+
+        .enter-btn:hover {
+            background: linear-gradient(135deg, #ff3b3b, #ff7b00);
+            border-color: transparent;
+            transform: scale(1.08);
+            box-shadow:
+                0 0 30px rgba(255, 123, 0, 0.6),
+                0 0 60px rgba(255, 59, 59, 0.3);
+            color: #fff;
+        }
+
+        /* Pulsing glow animation on button border */
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow:
+                    0 0 15px rgba(255, 59, 59, 0.3),
+                    0 0 30px rgba(255, 59, 59, 0.15),
+                    inset 0 0 15px rgba(255, 59, 59, 0.1);
+            }
+            50% {
+                box-shadow:
+                    0 0 25px rgba(255, 59, 59, 0.5),
+                    0 0 50px rgba(255, 59, 59, 0.25),
+                    inset 0 0 20px rgba(255, 59, 59, 0.2);
+            }
+        }
+
+        .enter-btn {
+            animation: pulse-glow 2.5s ease-in-out infinite;
+        }
+
+        .enter-btn:hover {
+            animation: none;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 2.5rem;
+                letter-spacing: 4px;
+            }
+            .tagline {
+                font-size: 0.85rem;
+                letter-spacing: 8px;
+            }
+            .enter-btn {
+                padding: 16px 40px;
+                font-size: 1rem;
+                letter-spacing: 3px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .logo-text {
+                font-size: 2rem;
+            }
+            .tagline {
+                font-size: 0.7rem;
+                letter-spacing: 6px;
+            }
+            .enter-btn {
+                padding: 14px 30px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fullscreen Video Background -->
+    <div class="video-bg" id="videoBg">
+        <video autoplay muted loop playsinline id="bg-video">
+            <source src="images/A_dramatic_second_cinematic.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- Dark Overlay -->
+    <div class="dark-overlay"></div>
+
+    <!-- Floating Ember Sparks -->
+    <div class="embers" id="embers"></div>
+
+    <!-- Gate Content — Logo + Button Only -->
+    <div class="gate-content">
+        <div class="logo-text">P5C</div>
+        <div class="tagline">Tech Solutions</div>
+        <div class="divider"></div>
+        <button class="enter-btn" id="enterBtn" onclick="enterSite()">Enter P5C</button>
+    </div>
+
+    <script>
+        // ── Generate Ember Particles ──
+        const embersContainer = document.getElementById('embers');
+        for (let i = 0; i < 50; i++) {
+            const ember = document.createElement('div');
+            ember.classList.add('ember');
+            const size = Math.random() * 4 + 1;
+            const hue = Math.random() > 0.5 ? '#ff5500' : '#ff3300';
+            ember.style.width = size + 'px';
+            ember.style.height = size + 'px';
+            ember.style.background = hue;
+            ember.style.boxShadow = `0 0 ${size * 3}px ${hue}`;
+            ember.style.left = Math.random() * 100 + '%';
+            ember.style.bottom = -(Math.random() * 20) + 'px';
+            ember.style.animationDuration = (Math.random() * 5 + 4) + 's';
+            ember.style.animationDelay = (Math.random() * 6) + 's';
+            embersContainer.appendChild(ember);
+        }
+
+        // ── Video Fallback ──
+        const video = document.getElementById('bg-video');
+        video.addEventListener('error', function () {
+            video.style.display = 'none';
+            document.getElementById('videoBg').classList.add('fallback');
+        });
+
+        // If video source fails to load
+        const source = video.querySelector('source');
+        if (source) {
+            source.addEventListener('error', function () {
+                video.style.display = 'none';
+                document.getElementById('videoBg').classList.add('fallback');
+            });
+        }
+
+        // ── Enter Button → Redirect to Main Website ──
+        function enterSite() {
+            window.location.href = 'index.html';
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>P5C Tech Solutions — Pricing</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --bg: #0A0A0F;
+            --surface: #111118;
+            --surface2: #1A1A24;
+            --border: #ffffff14;
+            --border2: #ffffff22;
+            --text: #F0F0F8;
+            --muted: #888899;
+            --accent: #6C63FF;
+            --accent2: #FF6B6B;
+            --green: #00E5A0;
+            --amber: #FFB347;
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden
+        }
+
+        /* noise overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: .4
+        }
+
+        /* glow blobs */
+        .blob1,
+        .blob2 {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0
+        }
+
+        .blob1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #6C63FF22, transparent 70%);
+            top: -200px;
+            right: -100px
+        }
+
+        .blob2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #FF6B6B18, transparent 70%);
+            bottom: -100px;
+            left: -100px
+        }
+
+        .wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 80px
+        }
+
+        /* ── NAV ── */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 60px
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .logo-mark {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Syne', sans-serif;
+            font-weight: 900;
+            font-size: 14px;
+            color: #fff;
+            letter-spacing: -0.5px
+        }
+
+        .logo-text {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -0.5px
+        }
+
+        .logo-text span {
+            color: var(--accent)
+        }
+
+        .nav-badge {
+            font-size: 11px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border2);
+            color: var(--muted);
+            letter-spacing: 0.5px
+        }
+
+        /* ── HERO ── */
+        .hero {
+            text-align: center;
+            margin-bottom: 64px
+        }
+
+        .hero-brand {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(36px, 8vw, 64px);
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff 40%, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text
+        }
+
+        .hero-tagline {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(13px, 2vw, 16px);
+            font-weight: 500;
+            color: var(--muted);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px
+        }
+
+        .hero-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border2);
+            color: var(--muted);
+            margin-bottom: 20px
+        }
+
+        .hero-chip::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: pulse 2s infinite
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .3
+            }
+        }
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(32px, 6vw, 52px);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 16px
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: var(--muted);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.7
+        }
+
+        /* ── SINGLES ── */
+        .section-title {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 16px
+        }
+
+        .section-title.big {
+            font-family: 'Syne', sans-serif;
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-transform: none;
+            color: var(--text);
+            margin-bottom: 20px
+        }
+
+        .singles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 60px
+        }
+
+        .s-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 16px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color .2s, transform .2s;
+            cursor: default
+        }
+
+        .s-card:hover {
+            border-color: var(--border2);
+            transform: translateY(-2px)
+        }
+
+        .s-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            border-radius: 2px 2px 0 0
+        }
+
+        .s-card.a1::after {
+            background: linear-gradient(90deg, #6C63FF, #9B8FFF)
+        }
+
+        .s-card.a2::after {
+            background: linear-gradient(90deg, #FF6B6B, #FF9999)
+        }
+
+        .s-card.a3::after {
+            background: linear-gradient(90deg, #00E5A0, #00C8A0)
+        }
+
+        .s-card.a4::after {
+            background: linear-gradient(90deg, #FFB347, #FFD080)
+        }
+
+        .s-card.a5::after {
+            background: linear-gradient(90deg, #FF6BD6, #FF9BE8)
+        }
+
+        .s-label {
+            font-size: 11px;
+            color: var(--muted);
+            margin-bottom: 10px;
+            line-height: 1.4
+        }
+
+        .s-price {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text)
+        }
+
+        .s-note {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 4px;
+            opacity: .7
+        }
+
+        /* ── TABS ── */
+        .tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 24px;
+            flex-wrap: wrap
+        }
+
+        .tab {
+            font-size: 13px;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all .2s;
+            font-family: 'DM Sans', sans-serif
+        }
+
+        .tab:hover {
+            border-color: var(--border2);
+            color: var(--text)
+        }
+
+        .tab.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff
+        }
+
+        /* ── PLANS ── */
+        .plans {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 60px
+        }
+
+        @media(max-width:640px) {
+            .plans {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .plan {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 24px 20px;
+            position: relative;
+            transition: transform .2s, border-color .2s;
+            overflow: hidden
+        }
+
+        .plan:hover {
+            transform: translateY(-3px);
+            border-color: var(--border2)
+        }
+
+        .plan.hot {
+            background: linear-gradient(145deg, #13132a, #1a1035);
+            border: 1px solid var(--accent)44;
+            box-shadow: 0 0 40px #6C63FF18
+        }
+
+        .plan.hot::before {
+            content: 'Most picked';
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .5px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: #6C63FF22;
+            color: var(--accent);
+            border: 1px solid var(--accent)44
+        }
+
+        .plan-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 18px
+        }
+
+        .plan-icon.i1 {
+            background: #ffffff08
+        }
+
+        .plan-icon.i2 {
+            background: #6C63FF22
+        }
+
+        .plan-icon.i3 {
+            background: #FF6B6B18
+        }
+
+        .plan-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 4px
+        }
+
+        .plan-sub {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 18px;
+            line-height: 1.5
+        }
+
+        .plan-price {
+            font-family: 'Syne', sans-serif;
+            font-size: 30px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 4px
+        }
+
+        .plan-price span {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--muted);
+            letter-spacing: 0
+        }
+
+        .plan-mo {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 20px
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin-bottom: 18px
+        }
+
+        .feat {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 9px;
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            line-height: 1.5
+        }
+
+        .feat .ck {
+            width: 16px;
+            height: 16px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+            font-size: 9px
+        }
+
+        .ck.y {
+            background: #00E5A022;
+            color: var(--green)
+        }
+
+        .ck.n {
+            background: #ffffff08;
+            color: transparent
+        }
+
+        .plan-btn {
+            width: 100%;
+            margin-top: 18px;
+            padding: 11px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--border2);
+            background: transparent;
+            color: var(--text);
+            transition: all .2s;
+            font-family: 'DM Sans', sans-serif
+        }
+
+        .plan-btn:hover {
+            background: var(--surface2);
+            border-color: var(--border2)
+        }
+
+        .plan.hot .plan-btn {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff
+        }
+
+        .plan.hot .plan-btn:hover {
+            opacity: .85
+        }
+
+        .tab-section {
+            display: none
+        }
+
+        .tab-section.active {
+            display: block
+        }
+
+        /* ── ADDONS ── */
+        .addons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 10px;
+            margin-bottom: 60px
+        }
+
+        .addon {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            transition: border-color .2s
+        }
+
+        .addon:hover {
+            border-color: var(--border2)
+        }
+
+        .addon-left .name {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 3px
+        }
+
+        .addon-left .desc {
+            font-size: 11px;
+            color: var(--muted)
+        }
+
+        .addon-price {
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent);
+            white-space: nowrap
+        }
+
+        /* ── CTA ── */
+        .cta-box {
+            background: linear-gradient(135deg, #6C63FF18, #FF6B6B10);
+            border: 1px solid var(--accent)33;
+            border-radius: 20px;
+            padding: 40px 32px;
+            text-align: center
+        }
+
+        .cta-box h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 10px
+        }
+
+        .cta-box p {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 24px
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: #fff;
+            padding: 13px 28px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: opacity .2s;
+            font-family: 'DM Sans', sans-serif
+        }
+
+        .cta-btn:hover {
+            opacity: .85
+        }
+
+        .cta-btn svg {
+            width: 16px;
+            height: 16px
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            margin-top: 60px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: gap;
+            gap: 12px
+        }
+
+        footer p {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        footer .tag {
+            font-size: 11px;
+            color: var(--muted);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid var(--border)
+        }
+
+        /* ── WORKS ── */
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 60px;
+        }
+        .work-card {
+            background: linear-gradient(145deg, var(--surface), var(--surface2));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: transform 0.2s, border-color 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .work-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            opacity: 0.7;
+        }
+        .work-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border2);
+        }
+        .work-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+        .work-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .work-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text);
+        }
+        .work-insta {
+            color: var(--muted);
+            transition: color 0.2s;
+            display: flex;
+        }
+        .work-insta:hover {
+            color: #E1306C;
+        }
+        .work-insta svg {
+            width: 20px;
+            height: 20px;
+        }
+        .work-desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .work-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .work-tags span {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: #ffffff08;
+            color: var(--muted);
+            border: 1px solid var(--border);
+        }
+
+        /* ── BUDGET TRACKER ── */
+        .budget-tracker {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 60px;
+        }
+        .b-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .b-opt {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .b-opt:hover {
+            border-color: var(--border2);
+            background: var(--surface2);
+        }
+        .b-opt input {
+            accent-color: var(--accent);
+            width: 16px;
+            height: 16px;
+        }
+        .b-total {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        .b-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .b-form input, .b-form textarea {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            outline: none;
+        }
+        .b-form input:focus, .b-form textarea:focus {
+            border-color: var(--accent);
+        }
+        .b-form textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        /* ── SPLASH SCREEN ── */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+        #splash-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        #splash-screen video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* Dark overlay on top of video */
+        .splash-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.65) 100%);
+            z-index: 1;
+        }
+        .skip-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: transparent;
+            border: 2px solid #ff3b3b;
+            color: #fff;
+            padding: 20px 55px;
+            border-radius: 4px;
+            font-family: 'Syne', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            z-index: 10000;
+            box-shadow: 0 0 15px rgba(255, 59, 59, 0.3), 0 0 30px rgba(255, 59, 59, 0.15), inset 0 0 15px rgba(255, 59, 59, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: pulse-glow 2.5s ease-in-out infinite;
+            overflow: hidden;
+        }
+        .skip-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+            transition: left 0.5s ease;
+        }
+        .skip-btn:hover::before {
+            left: 100%;
+        }
+        .skip-btn:hover {
+            background: linear-gradient(135deg, #ff3b3b, #ff7b00);
+            border-color: transparent;
+            transform: translate(-50%, -50%) scale(1.08);
+            box-shadow: 0 0 30px rgba(255, 123, 0, 0.6), 0 0 60px rgba(255, 59, 59, 0.3);
+            animation: none;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(255,59,59,0.3), 0 0 30px rgba(255,59,59,0.15), inset 0 0 15px rgba(255,59,59,0.1); }
+            50% { box-shadow: 0 0 25px rgba(255,59,59,0.5), 0 0 50px rgba(255,59,59,0.25), inset 0 0 20px rgba(255,59,59,0.2); }
+        }
+        body.no-scroll {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body class="no-scroll">
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen">
+        <video id="intro-video" autoplay muted loop playsinline>
+            <source src="images/A_dramatic_second_cinematic.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="splash-overlay"></div>
+        <button class="skip-btn" onclick="enterSite()">
+            Enter P5C
+        </button>
+    </div>
+
+    <div class="blob1"></div>
+    <div class="blob2"></div>
+
+    <div class="wrap">
+
+        <!-- NAV -->
+        <nav>
+            <div class="logo">
+                <div class="logo-mark">P5C</div>
+                <div class="logo-text"><span>P5C</span> Tech Solutions</div>
+            </div>
+            <div class="nav-badge">Madurai · 2026</div>
+        </nav>
+
+        <!-- HERO -->
+        <div class="hero">
+            <div class="hero-brand">P5C Tech Solutions</div>
+            <div class="hero-tagline">Providing You the Best Packs</div>
+            <div class="hero-chip">Available for new clients</div>
+            <h1>Simple, honest<br /><span>pricing for Madurai</span></h1>
+            <p>No hidden charges. No confusing tiers. Just real work at fair prices — from a local who gets it.</p>
+        </div>
+
+        <!-- INDIVIDUAL SERVICES -->
+        <div class="section-title">Individual services</div>
+        <div class="singles">
+            <div class="s-card a1">
+                <div class="s-label">Responsive website build</div>
+                <div class="s-price">₹4,100</div>
+                <div class="s-note">Design to deploy</div>
+            </div>
+            <div class="s-card a2">
+                <div class="s-label">Domain & hosting setup</div>
+                <div class="s-price">₹700</div>
+                <div class="s-note">Full configuration</div>
+            </div>
+            <div class="s-card a3">
+                <div class="s-label">SEO setup</div>
+                <div class="s-price">₹400</div>
+                <div class="s-note">On-page + sitemap</div>
+            </div>
+            <div class="s-card a4">
+                <div class="s-label">Meta / Insta ads</div>
+                <div class="s-price">₹1,300</div>
+                <div class="s-note">Per month</div>
+            </div>
+            <div class="s-card a5">
+                <div class="s-label">Video editing</div>
+                <div class="s-price">₹700</div>
+                <div class="s-note">4 reels / shorts</div>
+            </div>
+            <div class="s-card a1">
+                <div class="s-label">Video shoot</div>
+                <div class="s-price">₹500</div>
+                <div class="s-note">Per video, on location</div>
+            </div>
+
+        </div>
+
+        <!-- PACKAGES -->
+        <div class="section-title big">Packages</div>
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('local',this)">Local business</button>
+            <button class="tab" onclick="switchTab('turf',this)">Turf / Sports</button>
+            <button class="tab" onclick="switchTab('food',this)">Food & café</button>
+            <button class="tab" onclick="switchTab('clothing',this)">Clothing / Fashion</button>
+        </div>
+
+        <!-- LOCAL -->
+        <div id="tab-local" class="tab-section active">
+            <div class="plans">
+                <div class="plan">
+                    <div class="plan-icon i1">🌱</div>
+                    <div class="plan-name">Starter</div>
+                    <div class="plan-sub">Small shops, boutiques, clinics</div>
+                    <div class="plan-price">₹5,500 <span>one-time</span></div>
+                    <div class="plan-mo">+ ₹1,300/mo ads (optional)</div>
+                    <div class="divider"></div>
+                    <div class="feat"><span class="ck y">✓</span>3–5 page responsive site</div>
+                    <div class="feat"><span class="ck y">✓</span>Domain & hosting setup</div>
+                    <div class="feat"><span class="ck y">✓</span>WhatsApp chat button</div>
+                    <div class="feat"><span class="ck y">✓</span>Google Maps embed</div>
+                    <div class="feat"><span class="ck y">✓</span>Basic SEO</div>
+                    <div class="feat"><span class="ck y">✓</span>1 month free support</div>
+                    <div class="feat"><span class="ck n">✗</span><span style="opacity:.35">No ads management</span>
+                    </div>
+                    <div class="feat"><span class="ck n">✗</span><span style="opacity:.35">No video editing</span></div>
+                    <button class="plan-btn" onclick="wa('Starter Local — ₹5,500')">Enquire on WhatsApp →</button>
+                </div>
+                <div class="plan hot">
+                    <div class="plan-icon i2">🔥</div>
+                    <div class="plan-name">Growth</div>
+                    <div class="plan-sub">Gyms, salons, photo studios</div>
+                    <div class="plan-price">₹9,500 <span>one-time</span></div>
+                    <div class="plan-mo">+ ₹2,500/mo ads (optional)</div>
+                    <div class="divider"></div>
+                    <div class="feat"><span class="ck y">✓</span>5–7 page responsive site</div>
+                    <div class="feat"><span class="ck y">✓</span>Domain, hosting & SSL</div>
+                    <div class="feat"><span class="ck y">✓</span>Full SEO setup</div>
+                    <div class="feat"><span class="ck y">✓</span>Meta ads setup (1 month)</div>
+                    <div class="feat"><span class="ck y">✓</span>4 reels edited</div>
+                    <div class="feat"><span class="ck y">✓</span>WhatsApp + enquiry form</div>
+                    <div class="feat"><span class="ck y">✓</span>Google Analytics</div>
+                    <div class="feat"><span class="ck y">✓</span>2 months free support</div>
+                    <button class="plan-btn" onclick="wa('Growth Local — ₹9,500')">Enquire on WhatsApp →</button>
+                </div>
+                <div class="plan">
+                    <div class="plan-icon i3">👑</div>
+                    <div class="plan-name">Premium</div>
+                    <div class="plan-sub">Hospitals, brands, boutiques</div>
+                    <div class="plan-price">₹16,000 <span>one-time</span></div>
+                    <div class="plan-mo">+ ₹4,000/mo ads (optional)</div>
+                    <div class="divider"></div>
+                    <div class="feat"><span class="ck y">✓</span>7–10 page custom site</div>
+                    <div class="feat"><span class="ck y">✓</span>Domain, hosting & SSL</div>
+                    <div class="feat"><span class="ck y">✓</span>SEO + Google Analytics</div>
+                    <div class="feat"><span class="ck y">✓</span>Meta + Insta ads (1 month)</div>
+                    <div class="feat"><span class="ck y">✓</span>8 reels + booking system</div>
+                    <div class="feat"><span class="ck y">✓</span>Monthly performance report</div>
+                    <div class="feat"><span class="ck y">✓</span>3 months free support</div>
+                    <div class="feat"><span class="ck y">✓</span>Priority response</div>
+                    <button class="plan-btn" onclick="wa('Premium Local — ₹16,000')">Enquire on WhatsApp →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TURF -->
+        <div id="tab-turf" class="tab-section">
+            <div class="plans">
+                <div class="plan">
+                    <div class="plan-icon i1">⚽</div>
+                    <div class="plan-name">Basic Turf</div>
+                    <div class="plan-sub">Single sport, new arenas</div>
+                    <div class="plan-price">₹6,000 <span>one-time</span></div>
+                    <div class="plan-mo">+ ₹1,500/mo ads (optional)</div>
+                    <div class="divider"></div>
+                    <div class="feat"><span class="ck y">✓</span>4-page responsive site</div>
+                    <div class="feat"><span class="ck y">✓</span>Domain & hosting</div>
+                    <div class="feat"><span class="ck y">✓</span>Timing & pricing table</div>
+                    <div class="feat"><span class="ck y">✓</span>WhatsApp booking button</div>
+                    <div class="feat"><span class="ck y">✓</span>Photo / video gallery</div>
+                    <div class="feat"><span class="ck n">✗</span><span style="opacity:.35">No slot booking system</span>
+                    </div>
+                    <div class="feat"><span class="ck n">✗</span><span style="opacity:.35">No ads</span></div>
+                    <button class="plan-btn" onclick="wa('Basic Turf — ₹6,000')">Enquire on WhatsApp →</button>
+                </div>
+                <div class="plan hot">
+                    <div class="plan-icon i2">🏆</div>
+                    <div class="plan-name">Slot Booking</div>
+                    <div class="plan-sub">Multi sport, established arenas</div>
+                    <div class="plan-price">₹11,000 <span>one-time</span></div>
+                    <div class="plan-mo">+ ₹2,000/mo ads (optional)</div>
+                    <div class="divider"></div>
+                    <div class="feat"><span class="ck y">✓</span>Full slot booking system</div>
+                    <div class="feat"><span class="ck y">✓</span>Time slot selection form</div>
+                    <div class="feat"><span class="ck y">✓</span>Domain, hosting & SSL</div>
+                    <div class="feat"><span class="ck y">✓</span>Meta ads setup (1 month)</div>
+                    <div class="feat"><span class="ck y">✓</span>4 promo reels edited</div>
+                    <div class="feat"><span class="ck y">✓</span>Tournament event page</div>
+                    <div class="feat"><span class="ck y">✓</span>2 months support</div>
+                    <button class="plan-btn" onclick="wa('Slot Booking Turf — ₹11,000')">Enquire on WhatsApp →</button>
+                </div>
+                <div class="plan">
+                    <div class="plan-icon i3">🏟️</div>
+                    <div class="plan-name">Arena Pro</div>
+                    <div class="plan-sub">Large complexes, academies</div>
+                    <div class="plan-price">₹18,000 <span>one-time</span></div>
+                    <div class="plan-mo">+ ₹4,000/mo ads (optional)</div>
+                    <div class="divider"></div>
+                    <div class="feat"><span class="ck y">✓</span>Full booking + UPI payment</div>
+                    <div class="feat"><span class="ck y">✓</span>Multi-sport slot management</div>
+                    <div class="feat"><span class="ck y">✓</span>Membership / monthly pass</div>
+                    <div class="feat"><span class="ck y">✓</span>Ads + 8 reels</div>
+                    <div class="feat"><span class="ck y">✓</span>Academy enrollment form</div>
+                    <div class="feat"><span class="ck y">✓</span>3 months support</div>
+                    <button class="plan-btn" onclick="wa('Arena Pro Turf — ₹18,000')">Enquire on WhatsApp →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOD -->
+        <div id="tab-food" class="tab-section">
+            <div class="plans">
+                <div class="plan">
+                    <div class="plan-icon i1">🍽️</div>
+                    <div class="plan-name">Menu Site</div>
+                    <div class="plan-sub">Small cafés, tiffin shops</div>
+                    <div class="plan-price">₹4,500 <span>one-time</span></div>
+                    <div class="plan-mo">+ ₹1,300/mo ads (optional)</div>
+                    <div class="divider"></div>
+                    <div class="feat"><span class="ck y">✓</span>Digital menu page</div>
+                    <div class="feat"><span class="ck y">✓</span>QR code for table menu</div>
+                    <div class="feat"><span class="ck y">✓</span>WhatsApp order button</div>
+                    <div class="feat"><span class="ck y">✓</span>Google Maps + timings</div>
+                    <div class="feat"><span class="ck n">✗</span><span style="opacity:.35">No reels</span></div>
+                    <div class="feat"><span class="ck n">✗</span><span style="opacity:.35">No ads</span></div>
+                    <button class="plan-btn" onclick="wa('Menu Site Food — ₹4,500')">Enquire on WhatsApp →</button>
+                </div>
+                <div class="plan hot">
+                    <div class="plan-icon i2">☕</div>
+                    <div class="plan-name">Café Growth</div>
+                    <div class="plan-sub">Restaurants, cloud kitchens</div>
+                    <div class="plan-price">₹9,000 <span>one-time</span></div>
+                    <div class="plan-mo">+ ₹2,000/mo ads (optional)</div>
+                    <div class="divider"></div>
+                    <div class="feat"><span class="ck y">✓</span>Full restaurant website</div>
+                    <div class="feat"><span class="ck y">✓</span>Photo gallery + menu</div>
+                    <div class="feat"><span class="ck y">✓</span>Table reservation form</div>
+                    <div class="feat"><span class="ck y">✓</span>4 food reels edited</div>
+                    <div class="feat"><span class="ck y">✓</span>Meta offers ads setup</div>
+                    <div class="feat"><span class="ck y">✓</span>2 months support</div>
+                    <button class="plan-btn" onclick="wa('Café Growth Food — ₹9,000')">Enquire on WhatsApp →</button>
+                </div>
+                <div class="plan">
+                    <div class="plan-icon i3">🏪</div>
+                    <div class="plan-name">Food Brand</div>
+                    <div class="plan-sub">Multi-branch, franchise ready</div>
+                    <div class="plan-price">₹15,000 <span>one-time</span></div>
+                    <div class="plan-mo">+ ₹3,500/mo ads (optional)</div>
+                    <div class="divider"></div>
+                    <div class="feat"><span class="ck y">✓</span>Multi-branch website</div>
+                    <div class="feat"><span class="ck y">✓</span>Online ordering system</div>
+                    <div class="feat"><span class="ck y">✓</span>Loyalty & offers page</div>
+                    <div class="feat"><span class="ck y">✓</span>8 reels + brand video</div>
+                    <div class="feat"><span class="ck y">✓</span>Full Meta ads campaign</div>
+                    <div class="feat"><span class="ck y">✓</span>3 months support</div>
+                    <button class="plan-btn" onclick="wa('Food Brand — ₹15,000')">Enquire on WhatsApp →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CLOTHING -->
+        <div id="tab-clothing" class="tab-section">
+            <div class="plans">
+                <div class="plan">
+                    <div class="plan-icon i1">👕</div>
+                    <div class="plan-name">Catalogue</div>
+                    <div class="plan-sub">Boutiques, small clothing shops</div>
+                    <div class="plan-price">₹5,000 <span>one-time</span></div>
+                    <div class="plan-mo">+ ₹1,300/mo ads (optional)</div>
+                    <div class="divider"></div>
+                    <div class="feat"><span class="ck y">✓</span>Product catalogue site</div>
+                    <div class="feat"><span class="ck y">✓</span>Category filter (men/women)</div>
+                    <div class="feat"><span class="ck y">✓</span>WhatsApp enquiry per item</div>
+                    <div class="feat"><span class="ck y">✓</span>Domain & hosting</div>
+                    <div class="feat"><span class="ck n">✗</span><span style="opacity:.35">No reels</span></div>
+                    <div class="feat"><span class="ck n">✗</span><span style="opacity:.35">No ads</span></div>
+                    <button class="plan-btn" onclick="wa('Catalogue Clothing — ₹5,000')">Enquire on WhatsApp →</button>
+                </div>
+                <div class="plan hot">
+                    <div class="plan-icon i2">🛍️</div>
+                    <div class="plan-name">Streetwear Store</div>
+                    <div class="plan-sub">Youth brands, streetwear shops</div>
+                    <div class="plan-price">₹10,000 <span>one-time</span></div>
+                    <div class="plan-mo">+ ₹2,500/mo ads (optional)</div>
+                    <div class="divider"></div>
+                    <div class="feat"><span class="ck y">✓</span>Lookbook-style site</div>
+                    <div class="feat"><span class="ck y">✓</span>New arrivals section</div>
+                    <div class="feat"><span class="ck y">✓</span>Instagram feed integration</div>
+                    <div class="feat"><span class="ck y">✓</span>4 collection reels edited</div>
+                    <div class="feat"><span class="ck y">✓</span>Meta ads (1 month)</div>
+                    <div class="feat"><span class="ck y">✓</span>Size guide + policy pages</div>
+                    <div class="feat"><span class="ck y">✓</span>2 months support</div>
+                    <button class="plan-btn" onclick="wa('Streetwear Store — ₹10,000')">Enquire on WhatsApp →</button>
+                </div>
+                <div class="plan">
+                    <div class="plan-icon i3">✨</div>
+                    <div class="plan-name">Fashion Brand</div>
+                    <div class="plan-sub">Premium labels, multi-category</div>
+                    <div class="plan-price">₹17,000 <span>one-time</span></div>
+                    <div class="plan-mo">+ ₹4,000/mo ads (optional)</div>
+                    <div class="divider"></div>
+                    <div class="feat"><span class="ck y">✓</span>Full e-commerce style site</div>
+                    <div class="feat"><span class="ck y">✓</span>Collection launch pages</div>
+                    <div class="feat"><span class="ck y">✓</span>Brand story + lookbook</div>
+                    <div class="feat"><span class="ck y">✓</span>8 reels + festival campaign</div>
+                    <div class="feat"><span class="ck y">✓</span>Full Meta + Insta ads</div>
+                    <div class="feat"><span class="ck y">✓</span>3 months support</div>
+                    <button class="plan-btn" onclick="wa('Fashion Brand — ₹17,000')">Enquire on WhatsApp →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADD-ONS -->
+        <div class="section-title">Add-on services</div>
+        <div class="addons">
+            <div class="addon">
+                <div class="addon-left">
+                    <div class="name">Logo design</div>
+                    <div class="desc">2 concepts</div>
+                </div>
+                <div class="addon-price">₹1,500</div>
+            </div>
+            <div class="addon">
+                <div class="addon-left">
+                    <div class="name">Extra pages</div>
+                    <div class="desc">Beyond package limit</div>
+                </div>
+                <div class="addon-price">₹500/page</div>
+            </div>
+            <div class="addon">
+                <div class="addon-left">
+                    <div class="name">Google My Business</div>
+                    <div class="desc">Setup + optimize</div>
+                </div>
+                <div class="addon-price">₹800</div>
+            </div>
+            <div class="addon">
+                <div class="addon-left">
+                    <div class="name">Monthly reels</div>
+                    <div class="desc">4 reels per month</div>
+                </div>
+                <div class="addon-price">₹1,500/mo</div>
+            </div>
+            <div class="addon">
+                <div class="addon-left">
+                    <div class="name">Ads retainer</div>
+                    <div class="desc">Ongoing management</div>
+                </div>
+                <div class="addon-price">₹2,000/mo</div>
+            </div>
+            <div class="addon">
+                <div class="addon-left">
+                    <div class="name">Booking system</div>
+                    <div class="desc">Slot / appointment</div>
+                </div>
+                <div class="addon-price">₹2,000</div>
+            </div>
+            <div class="addon">
+                <div class="addon-left">
+                    <div class="name">Video shoot</div>
+                    <div class="desc">On-location per video</div>
+                </div>
+                <div class="addon-price">₹500/video</div>
+            </div>
+            <div class="addon">
+                <div class="addon-left">
+                    <div class="name">WhatsApp catalogue</div>
+                    <div class="desc">WA Business setup</div>
+                </div>
+                <div class="addon-price">₹800</div>
+            </div>
+            <div class="addon">
+                <div class="addon-left">
+                    <div class="name">Annual maintenance</div>
+                    <div class="desc">Updates + backups</div>
+                </div>
+                <div class="addon-price">₹2,400/yr</div>
+            </div>
+        </div>
+
+        <!-- OUR WORKS -->
+        <div class="section-title big">Our Works</div>
+        <div class="works-grid">
+            <div class="work-card">
+                <img src="images/somu-badminton.png" alt="Somu Badminton Academy" class="work-image" />
+                <div class="work-header">
+                    <div class="work-title">Somu Badminton Academy</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="font-size: 11px; font-weight: 600; background: #E1306C15; color: #E1306C; padding: 4px 10px; border-radius: 20px; border: 1px solid #E1306C50; white-space: nowrap;">
+                            Releasing Soon 🚀
+                        </div>
+                        <a href="https://instagram.com/somuacademy" target="_blank" class="work-insta" title="View on Instagram">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm3.98-10.169a1.44 1.44 0 11-2.879 0 1.44 1.44 0 012.878 0z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="work-desc">
+                    <p>Built a multi-court slot booking system. Managing their Instagram/Facebook marketing and running targeted Meta Ads for tournament campaigns.</p>
+                </div>
+                <div class="work-tags">
+                    <span>Slot Booking</span>
+                    <span>Meta Ads</span>
+                    <span>Social Media Marketing</span>
+                </div>
+            </div>
+
+            <div class="work-card">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; height: 200px;">
+                    <img src="images/nd-school-1.png" alt="Neurodiverse School Screen 1" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 1px solid var(--border);" />
+                    <img src="images/nd-school-2.png" alt="Neurodiverse School Screen 2" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 1px solid var(--border);" />
+                    <img src="images/nd-school-3.png" alt="Neurodiverse School Screen 3" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 1px solid var(--border);" />
+                </div>
+                <div class="work-header">
+                    <div class="work-title" style="font-size: 16px;">Neurodiverse School</div>
+                    <a href="https://neurodrivers-school.vercel.app/" target="_blank" style="font-size: 11px; font-weight: 600; background: #6C63FF15; color: var(--accent); padding: 4px 10px; border-radius: 20px; border: 1px solid #6C63FF50; white-space: nowrap; text-decoration: none; transition: all 0.2s;">
+                        View Live ↗
+                    </a>
+                </div>
+                <div class="work-desc">
+                    <p>A specialized educational institution in Coimbatore for differently-abled and neurodiverse students. Currently building an accessible, inclusive digital presence.</p>
+                </div>
+                <div class="work-tags">
+                    <span>Education</span>
+                    <span>Accessibility</span>
+                    <span>Web Dev</span>
+                </div>
+            </div>
+
+            <div class="work-card">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 20px; height: 200px;">
+                    <img src="images/1.jpeg" alt="SolveXCart Screen 1" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 1px solid var(--border);" />
+                    <img src="images/2.jpeg" alt="SolveXCart Screen 2" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 1px solid var(--border);" />
+                </div>
+                <div class="work-header">
+                    <div class="work-title" style="font-size: 16px;">SolveXCart</div>
+                    <a href="https://solvex-cart.vercel.app/" target="_blank" style="font-size: 11px; font-weight: 600; background: #6C63FF15; color: var(--accent); padding: 4px 10px; border-radius: 20px; border: 1px solid #6C63FF50; white-space: nowrap; text-decoration: none; transition: all 0.2s;">
+                        View Live ↗
+                    </a>
+                </div>
+                <div class="work-desc">
+                    <p>An AI-powered e-commerce platform that transforms traditional online shopping into a smart, need-based experience. Users enter their requirements and budget, and the integrated AI generates a personalized product solution tailored to their goals. Supports multiple roles — users, sellers, and administrators — for efficient product management, order tracking, and platform monitoring.</p>
+                </div>
+                <div class="work-tags">
+                    <span>AI / ML</span>
+                    <span>React</span>
+                    <span>Firebase</span>
+                    <span>Express</span>
+                    <span>E-Commerce</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- BUDGET TRACKER -->
+        <div class="section-title big">Budget Estimator</div>
+        <div class="budget-tracker">
+            <div class="b-options">
+                <label class="b-opt"><input type="checkbox" value="4100" data-name="Responsive Website" onchange="calcBudget()"> Responsive Website (₹4,100)</label>
+                <label class="b-opt"><input type="checkbox" value="700" data-name="Domain & Hosting" onchange="calcBudget()"> Domain & Hosting (₹700)</label>
+                <label class="b-opt"><input type="checkbox" value="400" data-name="SEO Setup" onchange="calcBudget()"> SEO Setup (₹400)</label>
+                <label class="b-opt"><input type="checkbox" value="1300" data-name="Meta / Insta Ads" onchange="calcBudget()"> Meta / Insta Ads (₹1,300)</label>
+                <label class="b-opt"><input type="checkbox" value="700" data-name="Video Editing" onchange="calcBudget()"> Video Editing (₹700)</label>
+                <label class="b-opt"><input type="checkbox" value="1500" data-name="Logo Design" onchange="calcBudget()"> Logo Design (₹1,500)</label>
+            </div>
+            <div class="b-total">Estimated Total: ₹<span id="budget-total">0</span></div>
+            
+            <div class="b-form">
+                <input type="text" id="b-name" placeholder="Your Name" />
+                <textarea id="b-queries" placeholder="Any additional queries or specific requirements?"></textarea>
+                <button class="plan-btn" onclick="sendBudgetWA()" style="background:var(--green); color:#000; border:none; margin-top:10px; font-size:15px; padding:14px;">Send via WhatsApp →</button>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-box">
+            <h2>Ready to get started?</h2>
+            <p>Drop a WhatsApp message, give us a call, or check out our Instagram.</p>
+            
+            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:24px;">
+                <a href="https://wa.me/917010532395?text=Hi%20P5C%20Tech%20Solutions%2C%20I%27m%20interested%20in%20your%20services"
+                    class="cta-btn" target="_blank" style="background:#00E5A0; color:#000;">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.115.554 4.103 1.523 5.827L.057 23.882a.5.5 0 0 0 .612.612l6.055-1.466A11.943 11.943 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.518-5.187-1.42l-.371-.221-3.847.931.949-3.741-.243-.386A9.957 9.957 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
+                    </svg>
+                    WhatsApp
+                </a>
+
+                <a href="tel:+917010532395" class="cta-btn" style="background:#2D9CDB; color:#fff;">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
+                    Call Now
+                </a>
+
+                <a href="https://instagram.com/p5c_tech_solutions" class="cta-btn" target="_blank" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color:#fff;">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm3.98-10.169a1.44 1.44 0 11-2.879 0 1.44 1.44 0 012.878 0z"/>
+                    </svg>
+                    Instagram
+                </a>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer>
+            <p>© 2026 P5C Tech Solutions · Madurai, Tamil Nadu</p>
+            <div class="tag">Website · Ads · Video Editing</div>
+        </footer>
+
+    </div>
+
+    <script>
+        function switchTab(id, btn) {
+            document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + id).classList.add('active');
+            btn.classList.add('active');
+        }
+        function wa(plan) {
+            const msg = encodeURIComponent('Hi P5C Tech Solutions, I am interested in the ' + plan + ' package. Can you share more details?');
+            window.open('https://wa.me/917010532395?text=' + msg, '_blank');
+        }
+
+        function calcBudget() {
+            let total = 0;
+            document.querySelectorAll('.b-opt input:checked').forEach(cb => {
+                total += parseInt(cb.value);
+            });
+            document.getElementById('budget-total').innerText = total.toLocaleString('en-IN');
+        }
+
+        function sendBudgetWA() {
+            const name = document.getElementById('b-name').value.trim();
+            const queries = document.getElementById('b-queries').value.trim();
+            
+            let services = [];
+            let total = 0;
+            document.querySelectorAll('.b-opt input:checked').forEach(cb => {
+                services.push(cb.getAttribute('data-name') + ' (₹' + cb.value + ')');
+                total += parseInt(cb.value);
+            });
+            
+            if (!name) {
+                alert('Please enter your name.');
+                return;
+            }
+
+            let msg = `Hi P5C Tech Solutions, I'm ${name}.\n\n`;
+            if (services.length > 0) {
+                msg += `*My Estimated Budget:* ₹${total.toLocaleString('en-IN')}\n`;
+                msg += `*Selected Services:*\n- ${services.join('\n- ')}\n\n`;
+            }
+            if (queries) {
+                msg += `*Additional Queries:* ${queries}\n`;
+            }
+            if (services.length === 0 && !queries) {
+                msg += `I would like to discuss a custom requirement.`;
+            }
+
+            const url = 'https://wa.me/917010532395?text=' + encodeURIComponent(msg);
+            window.open(url, '_blank');
+        }
+
+        function enterSite() {
+            const splash = document.getElementById('splash-screen');
+            if (splash) {
+                splash.classList.add('hidden');
+                // After the fade-out transition ends, fully remove splash from the DOM
+                splash.addEventListener('transitionend', function() {
+                    const vid = document.getElementById('intro-video');
+                    if (vid) { vid.pause(); vid.src = ''; }
+                    splash.remove();
+                }, { once: true });
+            }
+            document.body.classList.remove('no-scroll');
+        }
+    </script>
+</body>
+
+</html>
