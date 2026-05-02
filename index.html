@@ -1815,7 +1815,7 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            section {
+            section, #budget-estimator {
                 padding: 60px 24px;
             }
 
@@ -1828,7 +1828,24 @@
             }
 
             .addons-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
+            }
+
+            .budget-wrapper,
+            .budget-inputs {
+                grid-template-columns: 1fr;
+            }
+
+            .floating-actions {
+                flex-direction: column;
+                bottom: 24px;
+                right: 24px;
+                gap: 12px;
+            }
+
+            .float-btn {
+                width: 48px;
+                height: 48px;
             }
 
             .section-header {
